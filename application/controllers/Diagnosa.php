@@ -36,8 +36,10 @@ class Diagnosa extends CI_Controller {
 
       if($hasil['diagnosa'] == 'berhasil') {
         $this->load->view('pages/berhasil', $hasil);
+        // print_r($hasil);
       } else {
         $this->load->view('pages/gagal', $hasil);
+        // print_r($hasil);
       }
     }
     // print_r($wew);

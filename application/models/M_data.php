@@ -80,9 +80,15 @@ class M_data extends CI_Model {
   }
 
   function update_pasien($id, $data) {
-    $param = array(
-      'hasil_diagnosa' => $data->nama_penyakit
-    );
+    if ($data == "") {
+      $param = array(
+        'hasil_diagnosa' => 'Tidak terdeteksi'
+      );
+    } else {
+      $param = array(
+        'hasil_diagnosa' => $data->nama_penyakit
+      );
+    }
 
     $this->db->set($param);
     $this->db->where('id_pasien', $id);
