@@ -37,16 +37,16 @@
                   <i class="fa fa-users fa-5x"></i>
                 </div>
                 <div class="col-xs-6 text-right">
-                  <p class="announcement-heading">18</p>
+                  <p class="announcement-heading"><?= $pasien ?></p>
                   <p class="announcement-text">Jumlah Pasien</p>
                 </div>
               </div>
             </div>
-            <a href="#">
+            <a href="Data/pasien">
               <div class="panel-footer announcement-bottom">
                 <div class="row">
                   <div class="col-xs-6">
-                    Fix Issues
+                    Data Pasien
                   </div>
                   <div class="col-xs-6 text-right">
                     <i class="fa fa-arrow-circle-right"></i>
@@ -64,16 +64,16 @@
                   <i class="fa fa-medkit fa-5x"></i>
                 </div>
                 <div class="col-xs-6 text-right">
-                  <p class="announcement-heading">18</p>
+                  <p class="announcement-heading"><?= $penyakit ?></p>
                   <p class="announcement-text">Jumlah Penyakit</p>
                 </div>
               </div>
             </div>
-            <a href="#">
+            <a href="Data">
               <div class="panel-footer announcement-bottom">
                 <div class="row">
                   <div class="col-xs-6">
-                    Fix Issues
+                    Data Penyakit
                   </div>
                   <div class="col-xs-6 text-right">
                     <i class="fa fa-arrow-circle-right"></i>
@@ -91,16 +91,16 @@
                   <i class="fa fa-tasks fa-5x"></i>
                 </div>
                 <div class="col-xs-6 text-right">
-                  <p class="announcement-heading">18</p>
+                  <p class="announcement-heading"><?= $gejala ?></p>
                   <p class="announcement-text">Jumlah Gejala</p>
                 </div>
               </div>
             </div>
-            <a href="#">
+            <a href="Data/gejala">
               <div class="panel-footer announcement-bottom">
                 <div class="row">
                   <div class="col-xs-6">
-                    Fix Issues
+                    Data Gejala
                   </div>
                   <div class="col-xs-6 text-right">
                     <i class="fa fa-arrow-circle-right"></i>

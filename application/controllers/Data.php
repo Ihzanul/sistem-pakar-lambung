@@ -29,7 +29,7 @@ class Data extends CI_Controller {
 
   function pasien()
 	{
-		$data['penyakit'] = $this->informasi->get_data_pasien()->result_array();
+		$data['pasien'] = $this->informasi->get_data_pasien()->result_array();
 		$this->load->view('pages/data_pasien', $data);
 	}
 
@@ -38,7 +38,11 @@ class Data extends CI_Controller {
       $inputan = $this->input->post(null, TRUE);
 			$this->informasi->post_penyakit($inputan);
 			redirect('Data');
-    }
+    } else if(isset($_POST['ubah'])) {
+			$inputan = $this->input->post(null, TRUE);
+			$this->informasi->edit_penyakit($inputan);
+			redirect('Data');
+		}
 	}
 
 	function crud_gejala() {
@@ -46,7 +50,11 @@ class Data extends CI_Controller {
       $inputan = $this->input->post(null, TRUE);
 			$this->informasi->post_gejala($inputan);
 			redirect('Data/gejala');
-    }
+    } else if(isset($_POST['ubah'])) {
+			$inputan = $this->input->post(null, TRUE);
+			$this->informasi->edit_gejala($inputan);
+			redirect('Data/gejala');
+		}
 	}
 	
 	function tambah_pasien() {

@@ -34,13 +34,12 @@
 								<?php foreach($rule as $b => $row) { ?>
 									<tr>
 										<td><?= $row['id_rule'] ?></td>
-										<?php for ($i=1; $i < count($rule[1]); $i++) { ?>
-											<?php if($i <=9) { ?>
+										<?php for ($i=1; $i < count($rule[1]); $i++) { 
+											if($i <=9) { ?>
 												<td><?= $row["G0$i"] ?></td>
                   		<?php } else { ?>
 												<td><?= $row["G$i"] ?></td>
-                  		<?php } ?>
-                  	<?php } ?>
+                  		<?php } } ?>
 									</tr>
 								<?php } ?>
 							</tbody>
@@ -56,7 +55,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-tittle">Tambah Data Gejala</h4>
+            <h4 class="modal-tittle">Tambah Data Rule</h4>
           </div>
           <form action="" method="post" enctype="multipart/form-data">
             <div class="modal-body">
