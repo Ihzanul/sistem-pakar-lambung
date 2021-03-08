@@ -23,9 +23,9 @@
 						<table class="table table-bordered table-hover tablesorter">
 							<thead>
 								<tr>
-									<th>Nama Penyakit <i class="fa fa-sort"></i></th>
-									<th>Info <i class="fa fa-sort"></i></th>
-									<th>Solusi <i class="fa fa-sort"></i></th>
+									<th>Nama Penyakit </th>
+									<th>Info </th>
+									<th>Solusi </th>
 								</tr>
 							</thead>
 							<tbody>

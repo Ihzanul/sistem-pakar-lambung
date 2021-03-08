@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Data extends CI_Controller {
 
 	function __construct(){
-    parent::__construct();      
+    parent::__construct();
     $this->load->model('M_data', 'informasi');
   }
 
@@ -61,5 +61,14 @@ class Data extends CI_Controller {
 		$inputan = $this->input->post(null, TRUE);
 		$this->informasi->post_pasien($inputan);
 		redirect('Diagnosa/pilih_gejala');
+	}
+
+	function show_detail($nama_penyakit = null) {
+		$data['penyakit'] = $this->informasi->get_detail($nama_penyakit)->row();
+		$obj = (object) array('nama_penyakit' => $nama_penyakit);
+		
+		$this->informasi->update_pasien($this->session->userdata('id'), $obj, 'berhasil');		
+		$this->load->view('pages/berhasil', $data);
+		// print_r($obj);
 	}
 }

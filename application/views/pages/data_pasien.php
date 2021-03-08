@@ -24,11 +24,11 @@
 						<table class="table table-bordered table-hover tablesorter">
 							<thead>
 								<tr>
-									<th>No. <i class="fa fa-sort"></i></th>
-									<th>Nama Pasien <i class="fa fa-sort"></i></th>
-									<th>Alamat <i class="fa fa-sort"></i></th>
-									<th>Umur <i class="fa fa-sort"></i></th>
-									<th>Hasil Diagnosa <i class="fa fa-sort"></i></th>
+									<th>No. </th>
+									<th>Nama Pasien </th>
+									<th>Alamat </th>
+									<th>Umur </th>
+									<th>Hasil Diagnosa </th>
 								</tr>
 							</thead>
 							<tbody>

@@ -19,15 +19,15 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h2>Daftar Penyakit</h2>
-					<button style="float: right; margin: 10px" class="btn btn-success" data-toggle="modal" data-target="#tambah">Tambah</button>
+					<!-- <button style="float: right; margin: 10px" class="btn btn-success" data-toggle="modal" data-target="#tambah">Tambah</button> -->
 					<div class="table-responsive">
 						<table class="table table-bordered table-hover tablesorter">
 							<thead>
 								<tr>
-									<th>No. <i class="fa fa-sort"></i></th>
-									<th>Nama Penyakit <i class="fa fa-sort"></i></th>
-									<th>Info <i class="fa fa-sort"></i></th>
-									<th>Solusi <i class="fa fa-sort"></i></th>
+									<th>No. </th>
+									<th>Nama Penyakit </th>
+									<th>Info </th>
+									<th>Solusi </th>
 								</tr>
 							</thead>
 							<tbody>

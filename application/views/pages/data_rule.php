@@ -19,14 +19,14 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<h2>Daftar Rule</h2>
-					<button style="float: right; margin: 10px" class="btn btn-success" data-toggle="modal" data-target="#tambah">Tambah</button>
+					<!-- <button style="float: right; margin: 10px" class="btn btn-success" data-toggle="modal" data-target="#tambah">Tambah</button> -->
 					<div class="table-responsive">
 						<table class="table table-bordered table-hover tablesorter">
 							<thead>
 								<tr>
-									<th>No. <i class="fa fa-sort"></i></th>
+									<th>No. </th>
 									<?php for ($i=1; $i < count($rule[1]); $i++) { ?>
-                    <th>G<?= $i ?> <i class="fa fa-sort"></i></th>
+                    <th>G<?= $i ?> </th>
                   <?php } ?>
                   </tr>
 							</thead>

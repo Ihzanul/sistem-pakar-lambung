@@ -32,7 +32,7 @@ class Diagnosa extends CI_Controller {
       $hasil = $this->diagnosa->forward($inputan);
 
       // print_r($hasil['penyakit']);
-      $this->informasi->update_pasien($this->session->userdata('id'), $hasil['penyakit']);
+      $this->informasi->update_pasien($this->session->userdata('id'), $hasil['penyakit'], $hasil['diagnosa']);
 
       if($hasil['diagnosa'] == 'berhasil') {
         $this->load->view('pages/berhasil', $hasil);

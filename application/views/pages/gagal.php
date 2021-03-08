@@ -23,16 +23,16 @@
 						<table class="table table-bordered table-hover tablesorter">
 							<thead>
 								<tr>
-									<th>No. <i class="fa fa-sort"></i></th>
-									<th>Nama Penyakit <i class="fa fa-sort"></i></th>
-									<th>Presentase <i class="fa fa-sort"></i></th>
+									<th>No. </th>
+									<th>Nama Penyakit </th>
+									<th>Presentase </th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php $i=1; foreach(array_combine($result,$penyakit) as $b => $row) { ?>
 									<tr>
 										<td><?= $i++ ?></td>
-										<td><?= $row['nama_penyakit'] ?></td>
+										<td><a href="<?= site_url('Data/show_detail/'.$row['nama_penyakit']); ?>"><?= $row['nama_penyakit'] ?></a></td>
 										<td><?= $b ?></td>
 									</tr>
 								<?php } ?>

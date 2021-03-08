@@ -79,8 +79,8 @@ class M_data extends CI_Model {
     $this->db->insert('pasien', $param);
   }
 
-  function update_pasien($id, $data) {
-    if ($data == "") {
+  function update_pasien($id, $data, $diagnosa) {
+    if ($diagnosa == "gagal") {
       $param = array(
         'hasil_diagnosa' => 'Tidak terdeteksi'
       );
@@ -100,6 +100,13 @@ class M_data extends CI_Model {
     $this->db->from('pasien');
     $this->db->order_by('id_pasien', 'DESC');
     $this->db->limit(1);
+    return $this->db->get();
+  }
+
+  function get_detail($nama) {
+    $this->db->select('*');
+    $this->db->from('penyakit');
+    $this->db->where('nama_penyakit', $nama);
     return $this->db->get();
   }
 
