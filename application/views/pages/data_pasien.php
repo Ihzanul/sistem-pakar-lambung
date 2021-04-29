@@ -29,6 +29,7 @@
 									<th>Alamat </th>
 									<th>Umur </th>
 									<th>Hasil Diagnosa </th>
+									<th>Tindakan </th>
 								</tr>
 							</thead>
 							<tbody>
@@ -39,6 +40,7 @@
 										<td><?= $row['alamat'] ?></td>
 										<td><?= $row['umur'] ?></td>
 										<td><?= $row['hasil_diagnosa'] ?></td>
+										<td><a href="<?= site_url('Data/hapus_pasien/'.$row['id_pasien']); ?>"> Hapus </a></td>
 									</tr>
 								<?php } ?>
 							</tbody>

@@ -31,7 +31,7 @@
                         <div class="col-sm-12">
                           <div class="form-group" style="display: flex">
                             <input style="margin: 10px 10px 10px 5px" type="checkbox" id="check<?=$d['kode_gejala']?>" value="<?=$d['kode_gejala']?>" name="<?=$d['id_gejala']?>">
-                            <label class="form-control" for="check<?=$d['kode_gejala']?>"><?=$d['nama_gejala']?></label>
+                            <label class="form-control" for="check<?=$d['kode_gejala']?>"><?=$d['kode_gejala']?> <?=$d['nama_gejala']?></label>
                           </div>
                         </div>
                       </div>

@@ -29,11 +29,10 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php $i=1; foreach(array_combine($result,$penyakit) as $b => $row) { ?>
+								<?php $i=1; foreach($penyakit as $row) { ?>
 									<tr>
 										<td><?= $i++ ?></td>
-										<td><a href="<?= site_url('Data/show_detail/'.$row['nama_penyakit']); ?>"><?= $row['nama_penyakit'] ?></a></td>
-										<td><?= $b ?></td>
+										<td><a href="<?= site_url('Data/show_detail/'.$row); ?>"><?= $row['nama_penyakit'] ?></a></td>
 									</tr>
 								<?php } ?>
 							</tbody>

@@ -28,6 +28,7 @@
 									<th>Nama Penyakit </th>
 									<th>Info </th>
 									<th>Solusi </th>
+									<th>Solusi Sekunder</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -40,10 +41,12 @@
 													data-nama_penyakit = "<?= $row['nama_penyakit'] ?>"
 													data-info_penyakit = "<?= $row['info'] ?>"
 													data-solusi_penyakit = "<?= $row['solusi'] ?>"
+													data-solusi_sekunder = "<?= $row['solusi_'] ?>"
 											><?= $row['nama_penyakit'] ?></a>
 										</td>
 										<td><?= $row['info'] ?></td>
 										<td><?= $row['solusi'] ?></td>
+										<td><?= $row['solusi_'] ?></td>
 									</tr>
 								<?php } ?>
 							</tbody>
@@ -78,6 +81,10 @@
 							<div class="form-group">
 								<label class="control-label" for="solusi">Solusi Penyakit</label>
 								<textarea class="form-control" rows="6" name="solusi_penyakit" class="form-control" id="solusi"></textarea>
+							</div>
+							<div class="form-group">
+								<label class="control-label" for="solusi_s">Solusi Sekunder</label>
+								<textarea class="form-control" rows="6" name="solusi_sekunder" class="form-control" id="solusi_s"></textarea>
 							</div>
 						</div>
             <div class="modal-footer">
@@ -115,6 +122,10 @@
 								<label class="control-label" for="solusi_edit">Solusi Penyakit</label>
 								<textarea class="form-control" rows="6" name="solusi_penyakit" class="form-control" id="solusi_edit"></textarea>
 							</div>
+							<div class="form-group">
+								<label class="control-label" for="solusi_s">Solusi Sekunder</label>
+								<textarea class="form-control" rows="6" name="solusi_sekunder" class="form-control" id="solusi_s"></textarea>
+							</div>
 						</div>
             <div class="modal-footer">
               <button type="reset" class="btn btn-danger">Reset</button>
@@ -136,12 +147,14 @@
 			var namaPenyakit = $(this).data('nama_penyakit');
 			var info = $(this).data('info_penyakit');
 			var solusi = $(this).data('solusi_penyakit');
+			var solusi_s = $(this).data('solusi_sekunder');
 
 			console.log(info)
 			$(".modal-body #id_edit").val(id);
 			$(".modal-body #nama_edit").val(namaPenyakit);
 			$(".modal-body #info_edit").val(info);
 			$(".modal-body #solusi_edit").val(solusi);
+			$(".modal-body #solusi_s").val(solusi_s);
   	});
   </script>
 </body>

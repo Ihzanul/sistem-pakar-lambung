@@ -41,7 +41,8 @@ class M_data extends CI_Model {
     $param = array(
       'nama_penyakit' => $data['nama_penyakit'],
       'info' => $data['info_penyakit'],
-      'solusi' => $data['solusi_penyakit']
+      'solusi' => $data['solusi_penyakit'],
+      'solusi_' => $data['solusi_sekunder']
     );
 
     $this->db->set($param);
@@ -93,6 +94,10 @@ class M_data extends CI_Model {
     $this->db->set($param);
     $this->db->where('id_pasien', $id);
     $this->db->update('pasien');
+  }
+  
+  function delete_pasien($id) {
+    $this->db->delete('pasien', array('id_pasien' => $id));
   }
 
   function get_pasien() {

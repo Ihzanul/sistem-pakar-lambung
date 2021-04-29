@@ -63,6 +63,11 @@ class Data extends CI_Controller {
 		redirect('Diagnosa/pilih_gejala');
 	}
 
+	function hapus_pasien($id = null) {
+		$this->informasi->delete_pasien($id);
+		redirect('Data/pasien');
+	}
+
 	function show_detail($nama_penyakit = null) {
 		$data['penyakit'] = $this->informasi->get_detail($nama_penyakit)->row();
 		$obj = (object) array('nama_penyakit' => $nama_penyakit);

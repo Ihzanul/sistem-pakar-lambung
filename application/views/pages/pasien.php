@@ -12,7 +12,7 @@
 					<h1>SELAMAT DATANG <small>SISTEM PAKAR PENYAKIT LAMBUNG</small></h1>
 					<ol class="breadcrumb">
 						<li><a href="index.html"><i class="icon-dashboard"></i> Sistem pakar lambung</a></li>
-						<li class="active"><i class="icon-file-alt"></i> Data Penyakit</li>
+						<li class="active"><i class="icon-file-alt"></i> Diagnosa</li>
 					</ol>
 				</div>
 			</div><!-- /.row -->
