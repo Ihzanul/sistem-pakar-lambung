@@ -29,10 +29,16 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php $i=1; foreach($penyakit as $row) { ?>
+								<?php $j = 1; for ($i = 0; $i < count($daftar_penyakit); $i++) {
+											
+											$perintah = "SELECT * from penyakit where id_penyakit = '".$daftar_penyakit[$i]."'";
+											$data = $this->db->query($perintah)->row();	
+								?>
+									
 									<tr>
-										<td><?= $i++ ?></td>
-										<td><a href="<?= site_url('Data/show_detail/'.$row); ?>"><?= $row['nama_penyakit'] ?></a></td>
+										<td><?= $j++ ?></td>
+										<td><?= $data->nama_penyakit ?></td>
+										<td><?= round($nilai_cf[$i], 2) ?> %</td>
 									</tr>
 								<?php } ?>
 							</tbody>

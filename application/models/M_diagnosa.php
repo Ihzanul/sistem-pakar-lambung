@@ -224,9 +224,14 @@ class M_diagnosa extends CI_Model {
 
       // return var_dump($daftar_penyakit);
       // print_r($daftar_penyakit);
+      // $perintah = "SELECT * from penyakit where nama_penyakit = '$nama_penyakit_terbesar'";
+      // $diagnosa = $this->db->query($perintah)->row();
+
       return array(
         'diagnosa' => 'gagal',
-        'penyakit' => $daftar_penyakit
+        // 'penyakit' => $diagnosa,
+        'daftar_penyakit' => $daftar_penyakit,
+        'nilai_cf' => $daftar_cf
       );
     }
     
