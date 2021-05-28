@@ -8,17 +8,40 @@ class M_diagnosa extends CI_Model {
     return $this->db->get();
   }
 
-  function forward($input) {
+  function get_daftar_kondisi() {
+    $this->db->select("*");
+    $this->db->from("t_kondisi");
+    return $this->db->get();
+  }
 
+  function forward($input) {
     $qry='SELECT id_rule FROM rule WHERE ';
     array_pop($input);
+    
+    $j = 1;
     $rule_input=array();
-    foreach ($input as $where) {
-      $qry.=$where."=1 and ";
-      array_push($rule_input,$where);
+    for ($i = 0; $i < count($input['kondisi']); $i++) {
+      $new_input = explode("_", $input['kondisi'][$i]);
+      
+      if ($j < 10) {
+        $kondisi = "G0$j";
+      } else {
+        $kondisi = "G$j";
+      }
+
+      //cari cara bagaimana mengecek apakah di dalam suatu index array terdapat karakter yang diinginkan
+      if(in_array($kondisi, $new_input)) {
+        $qry.=$new_input[0]."=1 and ";
+        array_push($rule_input,$new_input[0]);
+      }
+      $j++;
+      // print_r($new_input);
     }
     $qry.="1=1";
-
+    
+    // print_r($rule_input);
+    // echo $qry;
+    // die();
     $data = $this->db->query($qry)->row();
 
     $rule=array(
@@ -52,189 +75,87 @@ class M_diagnosa extends CI_Model {
 
       //mulai algoritma CF
     } else {
-      $cfRule = array();
-      foreach ($input as $g) {
-        if ($g == 'submit')
-          continue;
-        $gejalaExplode = explode('G', $g);
-        $gejalaNumber = $gejalaExplode[1];
-        $cfRule[strval(intval($gejalaNumber))] = true;
-      }
+      date_default_timezone_set("Asia/Jakarta");
+      $inptanggal = date('Y-m-d H:i:s');
 
-      $cfRule['submit'] = '';
+      $arbobot = array('0', '0', '0.3','0.6', '1.0');
+      $argejala = array();
 
-      $sql = '';
-      $i = 0;
-
-      
-      foreach($cfRule as $cf => $val) {
-        if ($val == 1)
-        {
-          if ($sql == '')
-          {
-            $sql = "'$cf'";
-          }
-          else
-          {
-            $sql = $sql.",'$cf'";
-          }
+      for ($i = 0; $i < count($_POST['kondisi']); $i++) {
+        $arkondisi = explode("_", $_POST['kondisi'][$i]);
+        if (strlen($_POST['kondisi'][$i]) > 1) {
+          $argejala += array($arkondisi[0] => $arkondisi[1]);
         }
-        $i++;
       }
       
-      empty($daftar_penyakit);
-      empty($daftar_cf);
+      $sqlPenyakit = "SELECT * FROM penyakit ORDER by id_penyakit";
+      $dataPenyakit = $this->db->query($sqlPenyakit)->result_array();
       
-      if ($sql != '') {
-        //mencari kode_penyakit di tabel pengetahuan yang gejalanya dipilih
-        $perintah = "SELECT kode_penyakit FROM t_diagnosa WHERE kode_gejala IN ($sql) GROUP BY kode_penyakit ORDER BY kode_penyakit";
-        //echo "<br/>".$perintah."<br/>";
-        $minta = $this->db->query($perintah)->result_array();
-        $id_penyakit_terbesar = '';
-        $kode_penyakit_terbesar = '';
-        $nama_penyakit_terbesar = '';
-        $c = 0;
-        
-        // print_r($minta);
-        // while($hs=mysqli_fetch_array($minta))
-        foreach($minta as $hs) {
-          //memproses id penyakit satu persatu
-          $kode_penyakit = $hs['kode_penyakit'];
-          $qryi = "SELECT * FROM penyakit WHERE id_penyakit = '$kode_penyakit'";
-          // $qry =mysqli_query($mysqli,$qryi);
-          // $dt = mysqli_fetch_array($qry);
-          $dt = $this->db->query($qryi)->result_array();
-          $nama_penyakit = $dt[0]['nama_penyakit'];
+      $arpenyakit = array();
 
-          $daftar_penyakit[$c] = $hs['kode_penyakit'];
-          $p = "SELECT kode_penyakit, mb, md, kode_gejala FROM t_diagnosa WHERE kode_gejala IN ($sql) AND kode_penyakit = '$kode_penyakit'";
-          //echo $p.'<br/>';
-          // $m =mysqli_query($mysqli,$p);
-          //mencari jumlah gejala yang ditemukan
-          // $jml = mysqli_num_rows($m);
-          $jml = $this->db->query($p)->num_rows();
-          //jika gejalanya 1 langsung ketemu CF nya
+      foreach($dataPenyakit as $rpenyakit) {
+        $cftotal_temp = 0;
+        $cf = 0;
 
-          // echo $jml;
-          if ($jml == 1)
-          {
-            // $h=mysqli_fetch_array($m);
-            $h = $this->db->query($p)->result_array();
-            $mb = $h[0]['mb'];
-            $md = $h[0]['md'];
-            $cf = $mb - $md;
-            $daftar_cf[$c] = $cf;
-            //cek apakah penyakit ini adalah penyakit dgn CF terbesar ?
-            if (($id_penyakit_terbesar == '') || ($cf_terbesar < $cf))
-            {
-              $cf_terbesar = $cf;
-              $id_penyakit_terbesar = $kode_penyakit;
-              $nama_penyakit_terbesar = $nama_penyakit;
-            }
-            //jika jumlah gejala cuma dua maka CF ketemu	
-          }
-          else if ($jml > 1)
-          {
-            $i = 1;
-            $m = $this->db->query($p)->result_array();
-            //proses gejala satu persatu
-            foreach($m as $h)
-            // while($h=mysqli_fetch_array($m))
-            {
-              //pada gejala yang pertama masukkan MB dan MD menjadi MBlama dan MDlama
-              if ($i == 1)
-              {
-                $mblama = $h['mb'];
-                $mdlama = $h['md'];
-                }
-              //pada gejala yang nomor dua masukkan MB dan MD menjadi MBbaru dan MB baru kemudian hitung MBsementara dan MDsementara
-              else if ($i == 2)
-              {
-                $mbbaru = $h['mb'];
-                $mdbaru = $h['md'];
-                $mbsementara = $mblama + ($mbbaru * (1 - $mblama));
-                $mdsementara = $mdlama + ($mdbaru * (1 - $mdlama));
-                //jika jumlah gejala cuma dua maka CF ketemu
-                if ($jml == 2)
-                {
-                  $mb = $mbsementara;
-                  $md = $mdsementara;
-                  $cf = $mb - $md;
-                  $daftar_cf[$c] = $cf;
-                  //cek apakah penyakit ini adalah penyakit dgn CF terbesar ?
-                  if (($id_penyakit_terbesar == '') || ($cf_terbesar < $cf))
-                  {
-                    $cf_terbesar = $cf;
-                    $id_penyakit_terbesar = $id_penyakit;
-                    $nama_penyakit_terbesar = $nama_penyakit;
-                  }
-                }
+        $sqlGejala = "SELECT * FROM t_diagnosa where kode_penyakit = $rpenyakit[id_penyakit]";
+        $dataGejala = $this->db->query($sqlGejala)->result_array();
+        $cflama = 0;
+
+        foreach($dataGejala as $rgejala) {
+          $arkondisi = explode("_", $_POST['kondisi'][0]);
+          $gejala = $arkondisi[0];
+
+          // print_r($rgejala);
+
+          for ($i = 0; $i < count($_POST['kondisi']); $i++) {
+            $arkondisi = explode("_", $_POST['kondisi'][$i]);
+            // print_r($_POST['kondisi']);
+            $gejala = $arkondisi[0];
+    
+            if ($rgejala['kode_gejala'] == $gejala) {
+              $cf = ($rgejala['mb'] - $rgejala['md']) * $arbobot[$arkondisi[1]];
+              // echo $cf;
+              if (($cf >= 0) && ($cf * $cflama >= 0)) {
+                $cflama = $cflama + ($cf * (1 - $cflama));
               }
-              //pada gejala yang ke 3 dst proses MBsementara dan MDsementara menjadi MBlama dan MDlama
-              //MB dan MD menjadi MBbaru dan MDbaru
-              //hitung MBsementara dan MD sementara yg sekarang
-              else if ($i >= 3)
-              {
-                $mblama = $mbsementara;
-                $mdlama = $mdsementara;
-                $mbbaru = $h['mb'];
-                $mdbaru = $h['md'];
-                $mbsementara = $mblama + ($mbbaru * (1 - $mblama));
-                $mdsementara = $mdlama + ($mdbaru * (1 - $mdlama));
-                //jika ini adalah gejala terakhir berarti CF ketemu
-                if ($jml == $i)
-                {
-                  $mb = $mbsementara;
-                  $md = $mdsementara;
-                  $cf = $mb - $md;
-                  $daftar_cf[$c] = $cf;
-                  //cek apakah penyakit ini adalah penyakit dgn CF terbesar ?
-                  if (($id_penyakit_terbesar == '') || ($cf_terbesar < $cf))
-                  {
-                    $cf_terbesar = $cf;
-                    $id_penyakit_terbesar = $kode_penyakit;
-                    $nama_penyakit_terbesar = $nama_penyakit;
-                  }
-                }
+              if ($cf * $cflama < 0) {
+                $cflama = ($cflama + $cf) / (1 - Math . Min(Math . abs($cflama), Math . abs($cf)));
               }
-              $i++;
+              if (($cf < 0) && ($cf * $cflama >= 0)) {
+                $cflama = $cflama + ($cf * (1 + $cflama));
+              }
             }
           }
-          $c++;
         }
-      }
-      //urutkan daftar gejala berdasarkan besar CF
-      for ($i = 0; $i < count($daftar_penyakit); $i++)
-      {
-        for ($j = $i + 1; $j < count($daftar_penyakit); $j++)
-        {
-          if ($daftar_cf[$j] > $daftar_cf[$i])
-          {
-            $t = $daftar_cf[$i];
-            $daftar_cf[$i] = $daftar_cf[$j];
-            $daftar_cf[$j] = $t;
-
-            $t = $daftar_penyakit[$i];
-            $daftar_penyakit[$i] = $daftar_penyakit[$j];
-            $daftar_penyakit[$j] = $t;
-          }
+        // echo $cflama;
+        if ($cflama > 0) {
+          $arpenyakit += array($rpenyakit["id_penyakit"] => number_format($cflama, 4));
         }
+        // print_r($arpenyakit);
+        // die();
       }
-      // return var_dump($input);
 
-      // return var_dump($daftar_penyakit);
-      // print_r($daftar_penyakit);
-      // $perintah = "SELECT * from penyakit where nama_penyakit = '$nama_penyakit_terbesar'";
-      // $diagnosa = $this->db->query($perintah)->row();
-
+      arsort($arpenyakit);
+  
+      $inpgejala = serialize($argejala);
+      $inppenyakit = serialize($arpenyakit);
+      // echo $inpgejala;
+      // die();
+  
+      $np1 = 0;
+      foreach ($arpenyakit as $key1 => $value1) {
+        $np1++;
+        $idpkt1[$np1] = $key1;
+        $vlpkt1[$np1] = $value1;
+      }
+      $kd_daftar = $this->session->userdata('id');
+      $this->db->query("INSERT INTO t_hasil (tanggal,gejala,penyakit,hasil_id,nilai_cf,kd_daftar) 
+      VALUES ('$inptanggal','$inpgejala','$inppenyakit','$idpkt1[1]','$vlpkt1[1]','$kd_daftar')");
       return array(
         'diagnosa' => 'gagal',
-        // 'penyakit' => $diagnosa,
-        'daftar_penyakit' => $daftar_penyakit,
-        'nilai_cf' => $daftar_cf
+        // 'result' => $vlpkt1,
+        'penyakit' => $arpenyakit
       );
     }
-    
   }
-
 }

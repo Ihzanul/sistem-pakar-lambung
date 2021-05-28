@@ -16,6 +16,7 @@ class Diagnosa extends CI_Controller {
 
   function pilih_gejala() {
     $data['gejala'] = $this->diagnosa->get_daftar_gejala()->result_array();
+    $data['kondisi'] = $this->diagnosa->get_daftar_kondisi()->result_array();
 		$data['pasien'] = $this->informasi->get_pasien()->row();
 
     $data_session = array(
