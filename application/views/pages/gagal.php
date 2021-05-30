@@ -35,7 +35,7 @@
 								?>
 									<tr>
 										<td><?= $j++ ?></td>
-										<td><?= $penyakit->nama_penyakit; ?></td>
+										<td><a href="<?= site_url('Data/show_detail/'.$penyakit->nama_penyakit); ?>"><?= $penyakit->nama_penyakit; ?></a></td>
 										<td><?= $nilai; ?> %</td>
 									</tr>
 								<?php } ?>
